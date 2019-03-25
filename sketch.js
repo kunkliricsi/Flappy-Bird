@@ -2,11 +2,14 @@ const { World, Engine, Body, Bodies } = Matter;
 
 const cheat = ['c', 's', 'i', 'r', 'k', 'e'];
 let cheatIndex = 0;
+let isCheating = -1;
 
 let world, engine;
+let speed;
 
 let csirke;
 let ground;
+let pipes = [];
 
 function preload() {
 }
@@ -17,23 +20,42 @@ function setup() {
   const canvas = createCanvas(innerWidth, innerHeight);
   engine = Engine.create();
   world = engine.world;
+  speed = 3;
   
   world.gravity.y = 2;
 
   csirke = new Csirke(250, 150, 25);
-  ground = new Ground(width/2, height + 25, width, 50);
+  ground = new Box(width/2, height + 25, width, 50, true);
+  window.setInterval(addPipe, 1500);
 }
 
 function draw() {
   Engine.update(engine);
   background(51);
   csirke.draw();
+  pipes.forEach((p) => p.draw());
+}
+
+function addPipe() {
+  var width = Math.floor((Math.random() * 80) + 240);
+  var position = Math.floor((Math.random() * height * 0.5) + height * 0.25)
+  pipes.push(new Pipe(position, width));
+
+  console.log(pipes.length);
 }
 
 function keyPressed() {
+  handleCheating(key);
+
+  if (key == "w") {
+    csirke.jump();
+  }
+}
+
+function handleCheating(key) {
   if (key == cheat[cheatIndex]) {
     if (cheatIndex == cheat.length - 1) {
-      console.log("cheating");
+      isCheating *= -1;
       cheatIndex = 0;
     }
     else {
@@ -42,9 +64,5 @@ function keyPressed() {
   }
   else {
     cheatIndex = 0;
-  }
-  
-  if (key == "w") {
-    Body.setVelocity(csirke.body, {x: 0, y: -10});
   }
 }

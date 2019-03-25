@@ -20,4 +20,8 @@ class Csirke {
         circle(0, 0, this.r);
         pop();
     }
+
+    jump() {
+        Body.setVelocity(this.body, {x: 0, y: -10});
+    }
 }
