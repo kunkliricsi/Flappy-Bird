@@ -18,6 +18,7 @@ function setup() {
   $("body").css("overflow", "hidden");
 
   const canvas = createCanvas(innerWidth, innerHeight);
+
   engine = Engine.create();
   world = engine.world;
   speed = 3;
@@ -31,7 +32,9 @@ function setup() {
 
 function draw() {
   Engine.update(engine);
+
   background(51);
+
   csirke.draw();
   pipes.forEach((p) => p.draw());
 }
@@ -39,9 +42,8 @@ function draw() {
 function addPipe() {
   var width = Math.floor((Math.random() * 80) + 240);
   var position = Math.floor((Math.random() * height * 0.5) + height * 0.25)
-  pipes.push(new Pipe(position, width));
 
-  console.log(pipes.length);
+  pipes.push(new Pipe(position, width));
 }
 
 function keyPressed() {
