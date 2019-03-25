@@ -65,6 +65,11 @@ function addPipe() {
   pipes.push(new Pipe(position, width));
 }
 
+function mousePressed() {
+  key = "w";
+  this.keyPressed();
+}
+
 function keyPressed() {
   handleCheating(key);
 
