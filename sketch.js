@@ -1,4 +1,4 @@
-const { World, Engine, Body, Bodies } = Matter;
+const { World, Engine, Events, Body, Bodies } = Matter;
 
 const cheat = ['c', 's', 'i', 'r', 'k', 'e'];
 let cheatIndex = 0;
@@ -10,6 +10,8 @@ let speed;
 let csirke;
 let ground;
 let pipes = [];
+
+let points = 0;
 
 function preload() {
 }
@@ -27,7 +29,20 @@ function setup() {
 
   csirke = new Csirke(250, 150, 25);
   ground = new Box(width/2, height + 25, width, 50, true);
+  
   window.setInterval(addPipe, 1500);
+
+  textSize(40);
+  textAlign(CENTER);
+  window.setInterval(() => points += 0.01, 10);
+
+  Events.on(engine, 'collisionStart', function(event) {
+    csirke.remove();
+    csirke = new Csirke(250, 150, 25);
+    pipes.forEach((p) => p.remove());
+    pipes = [];
+    points = 0;
+  });
 }
 
 function draw() {
@@ -37,6 +52,10 @@ function draw() {
 
   csirke.draw();
   pipes.forEach((p) => p.draw());
+
+  fill(125);
+  text(points.toFixed(2), width/2, height*0.2);
+  fill(256);
 }
 
 function addPipe() {

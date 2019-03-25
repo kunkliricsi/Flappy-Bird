@@ -1,11 +1,10 @@
 class Box {
     constructor(x, y, w, h, isStatic = false) {
         const options = {
-
+            isStatic: isStatic,
         }
 
         this.body = Bodies.rectangle(x, y, w, h, options);
-        this.body.isStatic = isStatic;
         this.w = w;
         this.h = h;
 

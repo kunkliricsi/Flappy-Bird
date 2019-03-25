@@ -31,4 +31,8 @@ class Pipe {
                 b.draw();
         });
     }
+
+    remove() {
+        this.Boxes.forEach((b) => b.remove());
+    }
 }

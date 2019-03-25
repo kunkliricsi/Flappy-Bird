@@ -24,4 +24,8 @@ class Csirke {
     jump() {
         Body.setVelocity(this.body, {x: 0, y: -10});
     }
+
+    remove() {
+        World.remove(world, this.body);
+    }
 }
